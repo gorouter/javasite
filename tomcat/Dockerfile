@@ -2,19 +2,13 @@ FROM wisbyme/javaos:1.8
 
 MAINTAINER ljjun <wisbyme@gmail.com>
 
-ENV TZ=Asia/Shanghai
-
 RUN set -x \
   && yum update -y \
   && yum install -y wget \
   && wget --tries=0 --quiet http://mirrors.shu.edu.cn/apache/tomcat/tomcat-8/v8.5.37/bin/apache-tomcat-8.5.37.tar.gz -O /tmp/tomcat-last.tar.gz \
-  && mkdir -p /usr/java/tomcat \
-  && tar -C /usr/java/tomcat/ -zxvf /tmp/tomcat-last.tar.gz \
-
-  && set -eux \
-  && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
-  && echo $TZ > /etc/timezone \
-  
+  && tar -C /usr/java/ -zxvf /tmp/tomcat-last.tar.gz \
+  && tomcatname=`ls -l /usr/java/ | grep 'apache-tomcat' | awk '{print $NF}'` \
+  && mv /usr/java/${tomcatname} /usr/java/tomcat \
   && yum clean all
   
 ENV CATALINA_HOME /usr/java/tomcat
