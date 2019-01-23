@@ -153,6 +153,8 @@
         <!--
         <Valve className="org.apache.catalina.authenticator.SingleSignOn" />
         -->
+        
+        <Context path="/" docBase="mainapp"/>
 
         <!-- Access log processes all example.
              Documentation at: /docs/config/valve.html
