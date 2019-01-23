@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:/home/bin:~/bin
+export PATH
+
+LANG=en_US.UTF-8
+cd /home/japp
+
+case "$1" in
+  up)
+    docker-compose up -d
+    ;;
+  down)
+    docker-compose down
+    ;; 
+  start)
+    docker-compose start
+    ;;
+  stop)
+    docker-compose stop
+    ;;
+  restart)
+    docker-compose restart
+    ;;
+  status)
+    docker-compose ps
+    ;;
+  *)
+    echo "使用方法: $0 { up | down | start | stop | restart | status }"
+    RETVAL=1
+    ;;
+esac
