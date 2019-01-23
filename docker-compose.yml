@@ -12,7 +12,7 @@ services:
     #build: ./tomcat
     
     volumes:
-      - ./tomcat/japp:/usr/java/tomcat/webapps/japp
+      - ./tomcat/mainapp:/usr/java/tomcat/webapps/mainapp
       - ./tomcat/conf/server.xml:/usr/java/tomcat/conf/server.xml
       - ./tomcat/conf/tomcat-users.xml:/usr/java/tomcat/conf/tomcat-users.xml
       - ./tomcat/conf/web.xml:/usr/java/tomcat/conf/web.xml
