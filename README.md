@@ -1,2 +1,2 @@
-# javaos
-Base image for Java / JRE 
+# javasite
+Services of Site for Java/JRE
