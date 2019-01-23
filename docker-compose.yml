@@ -1,0 +1,68 @@
+version: '2'
+# 定义服务tomcat,mysql,redis
+services:
+
+  # JAVA-TOMCAT
+  tomcat:
+    depends_on:
+      - mysql
+      - redis
+    
+    image: wisbyme/javasite-tomcat:1.8.5
+    #build: ./tomcat
+    
+    volumes:
+      - ./tomcat/japp:/usr/java/tomcat/webapps/japp
+      - ./tomcat/conf/server.xml:/usr/java/tomcat/conf/server.xml
+      - ./tomcat/conf/tomcat-users.xml:/usr/java/tomcat/conf/tomcat-users.xml
+      - ./tomcat/conf/web.xml:/usr/java/tomcat/conf/web.xml
+      - ./tomcat/conf/context.xml:/usr/java/tomcat/conf/context.xml
+
+    restart: always
+    ports:
+      - "8080:8080"
+      - "8443:8443"
+
+    networks:
+      - frontend
+    container_name: tomcat
+
+
+  # MySQL
+  mysql:
+    image: wisbyme/lnmpsite-mysql:5.7.18
+
+    ports:
+      - "127.0.0.1:3306:3306"
+      
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/my.cnf
+      
+    environment:
+      MYSQL_ROOT_PASSWORD: $MySQLpwd
+      
+    command: ['mysqld', '--character-set-server=utf8']
+    networks:
+      - backend
+    restart: always
+    container_name: mysql
+
+  # REDIS
+  redis:
+    image: wisbyme/lnmpsite-redis:4.0.11
+    
+    ports:
+      - "127.0.0.1:6379:6379"
+    networks:
+      - backend
+    
+    volumes:
+      - ./redis/redis.conf:/usr/local/redis/redis.conf
+      - ./log/redis.log:/usr/local/redis/redis.log
+    restart: always
+    container_name: redis
+
+networks:
+  frontend:
+  backend:
