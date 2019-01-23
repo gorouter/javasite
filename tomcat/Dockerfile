@@ -10,8 +10,7 @@ RUN set -x \
   && wget --tries=0 --quiet http://mirrors.shu.edu.cn/apache/tomcat/tomcat-8/v8.5.37/bin/apache-tomcat-8.5.37.tar.gz -O /tmp/tomcat-last.tar.gz \
   && mkdir -p /usr/java/tomcat \
   && tar -C /usr/java/tomcat/ -zxvf /tmp/tomcat-last.tar.gz \
-  
-  #reset time
+
   && set -eux \
   && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
   && echo $TZ > /etc/timezone \
