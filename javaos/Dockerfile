@@ -1,6 +1,6 @@
 FROM wisbyme/centos163
 
-MAINTAINER ljjun <wisbyme@gmail.com>
+LABEL maintainer="ljjun<wisbyme@gmail.com>"
 
 RUN set -x \
   && yum update -y \

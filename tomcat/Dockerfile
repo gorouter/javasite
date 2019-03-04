@@ -1,6 +1,6 @@
 FROM wisbyme/javaos:1.8
 
-MAINTAINER ljjun <wisbyme@gmail.com>
+LABEL maintainer="ljjun<wisbyme@gmail.com>"
 
 RUN set -x \
   && yum update -y \
