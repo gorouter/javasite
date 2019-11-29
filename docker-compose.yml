@@ -8,11 +8,11 @@ services:
       - mysql
       - redis
     
-    image: wisbyme/javasite-tomcat:1.8.5
-    #build: ./tomcat
+    image: wisbyme/tomcat:8.5.47
     
     volumes:
-      - ./tomcat/mainapp:/usr/java/tomcat/webapps/mainapp
+      - /etc/localtime:/etc/localtime:ro
+      - ./tomcat/webapps:/usr/java/tomcat/webapps
       - ./tomcat/conf/server.xml:/usr/java/tomcat/conf/server.xml
       - ./tomcat/conf/tomcat-users.xml:/usr/java/tomcat/conf/tomcat-users.xml
       - ./tomcat/conf/web.xml:/usr/java/tomcat/conf/web.xml
@@ -23,19 +23,19 @@ services:
       - "808:8080"
       - "443:8443"
 
-    networks:
-      - frontend
     container_name: tomcat
 
 
   # MySQL
   mysql:
-    image: wisbyme/lnmpsite-mysql:5.7.18
+    image: wisbyme/mysql:5.7.27
 
     ports:
       - "127.0.0.1:3306:3306"
       
     volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./log/mysql.log:/var/log/mysql/error.log
       - ./mysql/data:/var/lib/mysql
       - ./mysql/my.cnf:/etc/my.cnf
       
@@ -43,26 +43,22 @@ services:
       MYSQL_ROOT_PASSWORD: $MySQLpwd
       
     command: ['mysqld', '--character-set-server=utf8']
-    networks:
-      - backend
+    
     restart: always
     container_name: mysql
 
   # REDIS
   redis:
-    image: wisbyme/lnmpsite-redis:4.0.11
+    image: wisbyme/redis:5.0.5
     
     ports:
       - "127.0.0.1:6379:6379"
-    networks:
-      - backend
     
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - ./redis/redis.conf:/usr/local/redis/redis.conf
       - ./log/redis.log:/usr/local/redis/redis.log
+
     restart: always
     container_name: redis
 
-networks:
-  frontend:
-  backend:

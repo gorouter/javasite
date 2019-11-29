@@ -1,2 +1,2 @@
 #### Redis for Java Site
-version: 4.0.11
+version: 5.0.5
